@@ -8,3 +8,17 @@ print(f"이름: {name}")
 print(f"나이: {age}세")
 print(f"키: {height}cm")
 print(f"학생 여부: {is_student}")
+
+print("\n=== 조건문 ===")
+score = 85
+
+if score >= 90:
+    grade = "A"
+elif score >= 80:
+    grade = "B"
+elif score >= 70:
+    grade = "C"
+else:
+    grade = "F"
+
+print(f"점수: {score}점, 등급: {grade}")
