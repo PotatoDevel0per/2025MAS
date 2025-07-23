@@ -130,33 +130,33 @@ services:
     ports:
       - "5678:5678"
     environment:
-      # 기본 설정
+      # Default Setting
       - N8N_BASIC_AUTH_ACTIVE=true
       - N8N_BASIC_AUTH_USER=admin
       - N8N_BASIC_AUTH_PASSWORD=admin123
       
-      # 외부 접속 허용
+      # Allow external access
       - N8N_HOST=0.0.0.0
       - N8N_PORT=5678
       - N8N_PROTOCOL=http
       
-      # 웹훅 설정
+      # WEBHOOK_Setting
       - WEBHOOK_URL=https://voted-statutory-processor-matthew.trycloudflare.com
       
-      # 데이터 지속성
+      # Data Persistence
       - N8N_USER_FOLDER=/home/node/.n8n
       
-      # AI 모델 연동을 위한 설정
+      # Settings for AI Model Interworking
       - N8N_AI_ENABLED=true
       
-      # 시간대 설정
+      # Setting the Time Zone
       - TZ=Asia/Seoul
       
     volumes:
       - n8n_data:/home/node/.n8n
       - /var/run/docker.sock:/var/run/docker.sock:ro
     
-    # LM Studio와 통신을 위한 네트워크 설정
+    # Set up a network for communication with LM Studio
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
