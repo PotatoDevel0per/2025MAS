@@ -121,18 +121,53 @@ cd ~/n8n-docker
 
 ```yaml
 version: '3.8'
+
 services:
   n8n:
-    image: docker.n8n.io/n8nio/n8n
-    restart: always
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
     ports:
       - "5678:5678"
+    environment:
+      # 기본 설정
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=admin123
+      
+      # 외부 접속 허용
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      
+      # 웹훅 설정
+      - WEBHOOK_URL=https://voted-statutory-processor-matthew.trycloudflare.com
+      
+      # 데이터 지속성
+      - N8N_USER_FOLDER=/home/node/.n8n
+      
+      # AI 모델 연동을 위한 설정
+      - N8N_AI_ENABLED=true
+      
+      # 시간대 설정
+      - TZ=Asia/Seoul
+      
     volumes:
       - n8n_data:/home/node/.n8n
-    environment:
-      - GENERIC_TIMEZONE=America/New_York # Change this to your timezone!
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    
+    # LM Studio와 통신을 위한 네트워크 설정
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
 volumes:
-  n8n_data: {}
+  n8n_data:
+    driver: local
+
+networks:
+  default:
+    driver: bridge
+
 ```
 
 3. **Launch n8n**:
